@@ -15,23 +15,15 @@ sys.path.append('resources/')
 sys.path.append('src/')
 sys.path.append('src/modules')
 
-import constants, reserved, helper, network, textmanager
+import constants, reserved, helper, network, msgmanager
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 
+import os
+
 logging.basicConfig(format=constants.LOGGER_FORMAT, level=logging.INFO)
 LOGGER = logging.getLogger(constants.MAIN)
-
-
-
-
-def testhandler(bot, update):
-  print (update.message.document.file_id)
-  # file = bot.getFile(update.message.voice.file_id)
-  # print (file)
-  # print ("file_id: " + str(update.message.voice.file_id))
-  # file.download('voice.ogg')
 
 
 
@@ -47,9 +39,8 @@ def getUpdater():
   dp.add_handler(CommandHandler("whoyouare", network.whoYouAre))
 
   # on noncommand i.e message - echo the message on Telegram
-  textManager = textmanager.TextManager(bot)
-  dp.add_handler(MessageHandler(Filters.text, textManager.manageText))
-  dp.add_handler(MessageHandler(Filters.document, testhandler))
+  dp.add_handler(MessageHandler(Filters.text, msgmanager.txtMsgHandler))
+  dp.add_handler(MessageHandler(Filters.document, msgmanager.docAttachHandler))
 
   # log all errors
   # dp.add_error_handler(error)
