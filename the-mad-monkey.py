@@ -15,7 +15,7 @@ sys.path.append('resources/')
 sys.path.append('src/')
 sys.path.append('src/modules')
 
-import constants, reserved, helper
+import constants, reserved, helper, network, textmanager
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
@@ -25,25 +25,37 @@ LOGGER = logging.getLogger(constants.MAIN)
 
 
 
+
+def testhandler(bot, update):
+  print (update.message.document.file_id)
+  # file = bot.getFile(update.message.voice.file_id)
+  # print (file)
+  # print ("file_id: " + str(update.message.voice.file_id))
+  # file.download('voice.ogg')
+
+
+
 def getUpdater():
   LOGGER.info('Begin bot configuration...')
-  updater = Updater(reserved.TMM_TOKEN)
+  bot = Updater(reserved.TMM_TOKEN)
 
   # Get the dispatcher to register handlers
-  dp = updater.dispatcher
+  dp = bot.dispatcher
 
   # on different commands - answer in Telegram
   dp.add_handler(CommandHandler("hi", helper.hi))
-  # dp.add_handler(CommandHandler("help", help))
+  dp.add_handler(CommandHandler("whoyouare", network.whoYouAre))
 
   # on noncommand i.e message - echo the message on Telegram
-  # dp.add_handler(MessageHandler(Filters.text, echo))
+  textManager = textmanager.TextManager(bot)
+  dp.add_handler(MessageHandler(Filters.text, textManager.manageText))
+  dp.add_handler(MessageHandler(Filters.document, testhandler))
 
   # log all errors
   # dp.add_error_handler(error)
 
   LOGGER.info('configuration completed!')
-  return updater
+  return bot
 
 
 
