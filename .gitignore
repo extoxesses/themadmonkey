@@ -4,3 +4,6 @@
 
 # Reserved files
 /resources/reserved.py
+
+# VSCode files
+/.vscode/
