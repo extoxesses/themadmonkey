@@ -10,40 +10,43 @@
 #                                                                          |___/ 
 # A simple telegram bot for network analysis...
 
-import sys
-sys.path.append('resources/')
-sys.path.append('src/')
-sys.path.append('src/modules')
+# Project imports
+import src.constants
+import resources.reserved
+import src.modules.helper
+import src.modules.network
+import src.modules.msgmanager
 
-import constants, reserved, helper, network, msgmanager
-
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+# Default imports
 import logging
-
 import os
 
-logging.basicConfig(format=constants.LOGGER_FORMAT, level=logging.INFO)
-LOGGER = logging.getLogger(constants.MAIN)
+# Third parties import
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+
+
+logging.basicConfig(format=src.constants.LOGGER_FORMAT, level=logging.INFO)
+LOGGER = logging.getLogger(src.constants.MAIN)
 
 
 
 def getUpdater():
   LOGGER.info('Begin bot configuration...')
-  bot = Updater(reserved.TMM_TOKEN)
+  bot = Updater(resources.reserved.TMM_TOKEN)
 
   # Get the dispatcher to register handlers
   dp = bot.dispatcher
 
   # on different commands - answer in Telegram
-  dp.add_handler(CommandHandler("hi", helper.hi))
-  dp.add_handler(CommandHandler("whoyouare", network.whoYouAre))
+  dp.add_handler(CommandHandler("hi", src.modules.helper.hi))
+  dp.add_handler(CommandHandler("whoyouare", src.modules.network.whoYouAre))
 
   # on noncommand i.e message - echo the message on Telegram
-  dp.add_handler(MessageHandler(Filters.text, msgmanager.txtMsgHandler))
-  dp.add_handler(MessageHandler(Filters.document, msgmanager.docAttachHandler))
+  dp.add_handler(MessageHandler(Filters.text, src.modules.msgmanager.txtMsgHandler))
+  dp.add_handler(MessageHandler(Filters.document, src.modules.msgmanager.docAttachHandler))
 
   # log all errors
-  # dp.add_error_handler(error)
+  dp.add_error_handler(src.modules.helper.errorHandler)
 
   LOGGER.info('configuration completed!')
   return bot

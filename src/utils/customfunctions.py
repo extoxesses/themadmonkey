@@ -1,16 +1,13 @@
 #!/usr/bin/env python
 # This is an utility library for custom functions
 
-import sys
-sys.path.append('src/')
-
-import constants
+import src.constants
 
 import logging
 import os
 
-logging.basicConfig(format=constants.LOGGER_FORMAT, level=logging.INFO)
-LOGGER = logging.getLogger(constants.MAIN)
+logging.basicConfig(format=src.constants.LOGGER_FORMAT, level=logging.INFO)
+LOGGER = logging.getLogger(src.constants.CUSTOM_PACKAGE)
 
 
 

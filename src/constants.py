@@ -6,6 +6,9 @@ import os
 LOGGER_FORMAT = '[%(asctime)s] %(levelname)s\t%(name)s\t%(message)s'
 
 MAIN = 'main'
+CUSTOM_PACKAGE = 'custom'
+HELP_PACKAGE = 'helper'
 NETWORK_PACKAGE = 'network'
+USERS_PACKAGE = 'users'
 
 DOWNLOAD_PATH = os.environ['HOME'] + '/the-mad-monkey/'

@@ -9,7 +9,7 @@ import os
 import logging
 
 logging.basicConfig(format=src.constants.LOGGER_FORMAT, level=logging.INFO)
-LOGGER = logging.getLogger(src.constants.MAIN)
+LOGGER = logging.getLogger(src.constants.MSG_PACKAGE)
 
 
 def txtMsgHandler(update, context):
