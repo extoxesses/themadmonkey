@@ -43,6 +43,7 @@ def getUpdater():
 
   # on noncommand i.e message - echo the message on Telegram
   dp.add_handler(MessageHandler(Filters.text, src.modules.msgmanager.txtMsgHandler))
+  dp.add_handler(MessageHandler(Filters.video, src.modules.msgmanager.videoHandler))
   dp.add_handler(MessageHandler(Filters.document, src.modules.msgmanager.docAttachHandler))
 
   # log all errors

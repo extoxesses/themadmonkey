@@ -1,6 +1,7 @@
 # Python working directory
 */*.pyc
 */*/*.pyc
+*/*/*/*.pyc
 
 # Reserved files
 /resources/reserved.py

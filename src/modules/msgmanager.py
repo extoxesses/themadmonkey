@@ -20,7 +20,7 @@ def txtMsgHandler(update, context):
 def docAttachHandler(bot, context):
   user = context.message.chat
   if not src.utils.usersutils.checkUser(user, resources.reserved.VALID_USERS) :
-    LOGGER.warn ('Invalid request form: ' + user.first_name)
+    LOGGER.warn ('Invalid request form user ' + user.first_name)
     context.message.reply_text('Hi ' + user.first_name + '! You are not allowed to upload file on this server!')
     return
   
@@ -29,4 +29,25 @@ def docAttachHandler(bot, context):
   LOGGER.info ('Receive file: ' + doc.file_name)
 
   home = src.constants.DOWNLOAD_PATH + doc.file_name
-  file.download(home) # TODO fix this path
+  file.download(home)
+
+
+def videoHandler(bot, context):
+  print ('Video handler!!!')
+  # user = context.message.chat
+  # if not src.utils.usersutils.checkUser(user, resources.reserved.VALID_USERS) :
+  #   LOGGER.warn ('Invalid request form user ' + user.first_name)
+  #   context.message.reply_text('Hi ' + user.first_name + '! You are not allowed to upload file on this server!')
+  #   return
+  
+  doc = context.message.video
+  print (doc)
+
+  # file = bot.getFile(doc.file_id)
+  # LOGGER.info ('Receive file: ' + doc.file_name)
+
+  # print (file)
+
+  # home = src.constants.DOWNLOAD_PATH + doc.file_name
+  # # file.download(home)
+
