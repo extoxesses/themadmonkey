@@ -11,7 +11,7 @@ import logging
 logging.basicConfig(format=CONSTS.LOGGER_FORMAT, level=logging.INFO)
 LOGGER = logging.getLogger(CONSTS.MSG_PACKAGE)
 
-FORWARD_MSG = 'File to large: forwarded to sender!'
+FORWARD_MSG = 'File too large! Message id: '
 
 
 def txtMsgHandler(update, context):
@@ -35,18 +35,15 @@ def docAttachHandler(bot, context):
     file.download(home)
   
   except:
-    msg_id = str(context.message.message_id)
-    # sender_id = str(context.message.forward_from_chat.id)
+    # msg_id = str(context.message.message_id)
+    msg_id = str(context.message.document.file_name)
     recipient_id = str(context.message.chat.id)
     
-    LOGGER.info(FORWARD_MSG)
-    context.message.reply_text(FORWARD_MSG)
+    LOGGER.info(FORWARD_MSG + msg_id)
+    context.message.reply_text(FORWARD_MSG + msg_id)
     # bot.forward_message(recipient_id, recipient_id, msg_id)
-    bot.forward_message(str(81185035), str(81185035), msg_id)
 
   
-
-
 
 def videoHandler(bot, context):
   print ('Video handler!!!')

@@ -32,27 +32,17 @@ def bypassMsg() :
 
 @pyroClient.on_message(~Filters.private)
 def handler(client, msg) :
-  text = str(msg.text)
+
+  # if (not msg.outgoing) : return
 
   if (not allowedUser(msg)) :
-    LOGGER.info('Request from invalid user, or this is an outcoming message!')
-    return
-  
-
-  print(msg)
-
-  if (RESERVED.REF_MSG in str(text).lower()) :
-    downloader.setReceived()
-    LOGGER.info('Received forward file control message...')
+    username = msg.chat.username
+    LOGGER.warn('Request from invalid user! Requeste username [', username ,']')
     return
 
-  if (downloader.isForwarded()) :
-    LOGGER.info('Downloading incoming message...')
-    downloader.download(msg)
-    return
-
-  bypassMsg()
-
+  if (not downloader.addMessage(msg)) :
+    downloader.downloadFile(msg)
+    downloader.dropThat(1) # TODO: fix this value
 
 
 pyroClient.run()

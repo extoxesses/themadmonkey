@@ -14,26 +14,46 @@ LOGGER = logging.getLogger("DownloaderClient")
 class DownloaderClient :
 
   def __init__(self):
-    self.forwarded = False
-    self.correctMsg = ""
-    self.errorMsg = ""
+    self.medias = {}
+    self.reply = "" # TODO: Defile this message
+    self.error_reply = "" # TODO: Defile this message
 
-  def setReceived(self) :
-    self.forwarded = True
+  def addMessage(self, msg) :
+    if (msg.media) :
+      # msg_id = str(msg.message_id)
+      msg_id = msg.document.file_name
 
-  def unload(self) :
-    self.forwarded = False
+      self.medias[msg_id] = msg
+      LOGGER.info('Added new message to the dictionary with id: ' + msg_id)
+      return True
 
-  def downloadFile(self, msg) :
+    return False
+
+
+
+  def dropThat(self, delta) :
+    # TODO: this method should remove all entries that are older than the given 'delta'
+    LOGGER.info('Method not yet implemented!')
+
+
+  def downloadFile(self, request) :
+    req_msg = str(request.text)
+    if (req_msg == None) :
+      return
+
+    msg_id = req_msg.split(':')[1].lstrip()
+    LOGGER.info('Request to download file: ' + msg_id)
+
+    message = self.medias.get(msg_id)
+    if (message == None) :
+      LOGGER.warn("Required message does not exists!")
+      return
+
     try :
-      msg.downlod()
-      msg.reply(self.correctMsg)
+      LOGGER.info('Starting download attempt...')
+      path = message.download()
+      LOGGER.info('File downloaded at: ' + path)
+      message.reply(self.reply)
+      del self.medias[msg_id]
     except :
-      LOGGER.error("An error was raised during the file download phase - ", sys.exc_info()[0])
-      msg.reply(self.errorMsg)
-
-    self.forwarded = False
-
-
-  def isForwarded(self) :
-    return self.forwarded
+      message.reply(self.error_reply)

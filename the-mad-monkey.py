@@ -15,7 +15,7 @@ import src.constants
 import resources.reserved
 import src.modules.helper
 import src.modules.network
-import src.modules.msgmanager
+import src.modules.msgmanager as MSG_MANAGER
 
 # Default imports
 import logging
@@ -42,9 +42,9 @@ def getUpdater():
   dp.add_handler(CommandHandler("whoyouare", src.modules.network.whoYouAre))
 
   # on noncommand i.e message - echo the message on Telegram
-  dp.add_handler(MessageHandler(Filters.text, src.modules.msgmanager.txtMsgHandler))
-  dp.add_handler(MessageHandler(Filters.video, src.modules.msgmanager.videoHandler))
-  dp.add_handler(MessageHandler(Filters.document, src.modules.msgmanager.docAttachHandler))
+  dp.add_handler(MessageHandler(Filters.text, MSG_MANAGER.txtMsgHandler))
+  dp.add_handler(MessageHandler(Filters.video, MSG_MANAGER.videoHandler))
+  dp.add_handler(MessageHandler(Filters.document, MSG_MANAGER.docAttachHandler))
 
   # log all errors
   dp.add_error_handler(src.modules.helper.errorHandler)
