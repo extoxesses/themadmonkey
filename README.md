@@ -5,11 +5,16 @@ Projects was developped using __pyhton3__
 
 
 ## How to...
-Required packages are:
+Required packages for bot are:
 ```
 pip install telegram.ext
 pip3 install python-telegram-bot
-pip3 install telebot
+
+```
+
+Required packages for custom client task are:
+```
+pip3 install pyrogram
 ```
 
 ## Userfull links
