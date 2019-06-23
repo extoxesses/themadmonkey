@@ -36,6 +36,13 @@ class DownloaderClient :
     LOGGER.info('Method not yet implemented!')
 
 
+  def progressCallback(client, current, total, *args) :
+    print(client)
+    print(current)
+    print(total)
+    # LOGGER.info('File ' + client + ' status: [' + current + '/' + total + ']')
+
+
   def downloadFile(self, request) :
     req_msg = str(request.text)
     if (req_msg == None) :
@@ -51,7 +58,7 @@ class DownloaderClient :
 
     try :
       LOGGER.info('Starting download attempt...')
-      path = message.download()
+      path = message.download(progress=self.progressCallback)
       LOGGER.info('File downloaded at: ' + path)
       message.reply(self.reply)
       del self.medias[msg_id]

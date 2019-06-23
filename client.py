@@ -36,8 +36,8 @@ def handler(client, msg) :
   # if (not msg.outgoing) : return
 
   if (not allowedUser(msg)) :
-    username = msg.chat.username
-    LOGGER.warn('Request from invalid user! Requeste username [', username ,']')
+    username = str(msg.chat.username)
+    LOGGER.warn('Request from invalid user! Requested username [' + username + ']')
     return
 
   if (not downloader.addMessage(msg)) :
