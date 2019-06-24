@@ -15,8 +15,10 @@ class DownloaderClient :
 
   def __init__(self):
     self.medias = {}
-    self.reply = "" # TODO: Defile this message
-    self.error_reply = "" # TODO: Defile this message
+    self.reply = "REPLY"       # TODO
+    self.error_reply = "ERROR" # TODO
+    self.total_docs_size = 0
+
 
   def addMessage(self, msg) :
     if (msg.media) :
@@ -30,17 +32,24 @@ class DownloaderClient :
     return False
 
 
+  def getTotalMsgSize(self) :
+    return self.total_docs_size
 
-  def dropThat(self, delta) :
-    # TODO: this method should remove all entries that are older than the given 'delta'
-    LOGGER.info('Method not yet implemented!')
+
+  def dropAll(self, delta) :
+    LOGGER.info('Dropping all cached files...')
+    total_docs_size = 0
+    self.medias = {}
+
+    print(self.medias)
 
 
   def progressCallback(client, current, total, *args) :
-    print(client)
-    print(current)
-    print(total)
-    # LOGGER.info('File ' + client + ' status: [' + current + '/' + total + ']')
+    percentage = float(total) / float(client.getTotalMsgSize())
+    percString = '%.3f'%(percentage)
+    LOGGER.info("Progress: " + percString + " %")
+    if (percentage == 100) :
+      super.dropAll()
 
 
   def downloadFile(self, request) :
@@ -58,9 +67,11 @@ class DownloaderClient :
 
     try :
       LOGGER.info('Starting download attempt...')
+      self.total_docs_size = message.document.file_size
       path = message.download(progress=self.progressCallback)
       LOGGER.info('File downloaded at: ' + path)
       message.reply(self.reply)
       del self.medias[msg_id]
+
     except :
       message.reply(self.error_reply)

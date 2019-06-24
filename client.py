@@ -42,7 +42,6 @@ def handler(client, msg) :
 
   if (not downloader.addMessage(msg)) :
     downloader.downloadFile(msg)
-    downloader.dropThat(1) # TODO: fix this value
 
 
 pyroClient.run()
