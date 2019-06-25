@@ -11,3 +11,6 @@
 
 # Comunication sessions
 *.session
+
+# Test files
+/downloads
