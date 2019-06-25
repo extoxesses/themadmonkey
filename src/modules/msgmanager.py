@@ -2,7 +2,9 @@
 # Endpoints for non-command messages management
 
 import src.constants as CONSTS
+import src.utils.usersutils as UTILS
 import resources.reserved as RESERVED
+
 
 import os
 import logging
@@ -19,7 +21,7 @@ def txtMsgHandler(update, context) :
 def docAttachHandler(bot, context) :
   try:
     user = context.message.chat
-    if not src.utils.usersutils.checkUser(user, RESERVED.VALID_USERS) :
+    if not UTILS.checkUser(user, RESERVED.VALID_USERS) :
       LOGGER.warn('Invalid request form user ' + user.first_name)
       context.message.reply_text('Hi ' + user.first_name + '! You are not allowed to upload file on this server!')
       return
@@ -35,5 +37,5 @@ def docAttachHandler(bot, context) :
     file_name = str(context.message.document.file_name)
     recipient_id = str(context.message.chat.id)
     
-    LOGGER.info(CONSTS.FORWARD_MSG + file_name)
-    context.message.reply_text(CONSTS.FORWARD_MSG + file_name)
+    LOGGER.info(CONSTS.FILE_ERROR_FORWARD_MSG + file_name)
+    context.message.reply_text(CONSTS.FILE_ERROR_FORWARD_MSG + file_name)
