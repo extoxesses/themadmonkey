@@ -2,8 +2,6 @@
 #!/usr/bin/env python
 # Class used from download client
 
-import sys
-
 import src.constants as CONSTS
 
 import logging

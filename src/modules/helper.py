@@ -3,21 +3,21 @@
 
 
 # Projects imports
-import src.constants
-import resources.reserved
+import src.constants as CONSTS
+import resources.reserved as RESERVED
 
 # Default imports
 import logging
 import os
 
-logging.basicConfig(format=src.constants.LOGGER_FORMAT, level=logging.INFO)
-LOGGER = logging.getLogger(src.constants.HELP_PACKAGE)
+logging.basicConfig(format=CONSTS.LOGGER_FORMAT, level=logging.INFO)
+LOGGER = logging.getLogger(CONSTS.HELP_PACKAGE)
 
 
 def hi(bot, context):
   user_id = context['message']['chat']['id']
   try:
-    user_tag = resources.reserved.VALID_USERS[user_id]
+    user_tag = RESERVED.VALID_USERS[user_id]
     context.message.reply_text('Hi, ' + user_tag + '!')
   except KeyError as e:
     context.message.reply_text('Who are you?')
