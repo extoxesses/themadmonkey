@@ -11,8 +11,6 @@ import logging
 logging.basicConfig(format=CONSTS.LOGGER_FORMAT, level=logging.INFO)
 LOGGER = logging.getLogger(CONSTS.MSG_PACKAGE)
 
-FORWARD_MSG = 'File too large! Message id: '
-
 
 def txtMsgHandler(update, context):
   LOGGER.info('Message from ' + str(context.message.chat.id))

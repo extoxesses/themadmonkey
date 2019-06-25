@@ -1,5 +1,6 @@
 
 #!/usr/bin/env python
+#
 # Client used to bypass bot file size limit
 
 import resources.reserved as RESERVED
@@ -14,10 +15,7 @@ import logging
 logging.basicConfig(format=CONSTS.LOGGER_FORMAT, level=logging.INFO)
 LOGGER = logging.getLogger("Client")
 
-
 downloader = DownloaderClient()
-
-
 
 ### --- Script
 
@@ -32,9 +30,6 @@ def bypassMsg() :
 
 @pyroClient.on_message(~Filters.private)
 def handler(client, msg) :
-
-  # if (not msg.outgoing) : return
-
   if (not allowedUser(msg)) :
     username = str(msg.chat.username)
     LOGGER.warn('Request from invalid user! Requested username [' + username + ']')

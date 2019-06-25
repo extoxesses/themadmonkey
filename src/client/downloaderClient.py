@@ -15,18 +15,17 @@ class DownloaderClient :
 
   def __init__(self):
     self.medias = {}
-    self.reply = "REPLY"       # TODO
-    self.error_reply = "ERROR" # TODO
+    self.success_reply = "Downloads completed successfully!"
+    self.error_reply = "An error occurred while downloading files. Checks logs for additional informations."
     self.total_docs_size = 0
 
 
   def addMessage(self, msg) :
     if (msg.media) :
-      # msg_id = str(msg.message_id)
-      msg_id = msg.document.file_name
+      file_name = msg.document.file_name
 
-      self.medias[msg_id] = msg
-      LOGGER.info('Added new message to the dictionary with id: ' + msg_id)
+      self.medias[file_name] = msg
+      LOGGER.info('Added new message to the dictionary with id: ' + file_name)
       return True
 
     return False
@@ -48,7 +47,7 @@ class DownloaderClient :
     percentage = float(total) / float(client.getTotalMsgSize())
     percString = '%.3f'%(percentage)
     LOGGER.info("Progress: " + percString + " %")
-    if (percentage == 100) :
+    if (percentage >= 100) :
       super.dropAll()
 
 
@@ -57,10 +56,13 @@ class DownloaderClient :
     if (req_msg == None) :
       return
 
-    msg_id = req_msg.split(':')[1].lstrip()
-    LOGGER.info('Request to download file: ' + msg_id)
+    if (CONSTS.FILE_ERROR_FORWARD_MSG not in req_msg) :
+      return
 
-    message = self.medias.get(msg_id)
+    file_name = req_msg.split(':')[1].lstrip()
+    LOGGER.info('Request to download file: ' + file_name)
+
+    message = self.medias.get(file_name)
     if (message == None) :
       LOGGER.warn("Required message does not exists!")
       return
@@ -70,8 +72,8 @@ class DownloaderClient :
       self.total_docs_size = message.document.file_size
       path = message.download(progress=self.progressCallback)
       LOGGER.info('File downloaded at: ' + path)
-      message.reply(self.reply)
-      del self.medias[msg_id]
+      message.reply(self.success_reply)
+      del self.medias[file_name]
 
     except :
       message.reply(self.error_reply)
