@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Network services
 
-import src.constants as CONSTS
+import constants as CONSTS
 
 import logging
 import urllib

@@ -5,9 +5,9 @@
 
 import resources.reserved as RESERVED
 from resources.reserved import pyroClient
-import src.constants as CONSTS
+import constants as CONSTS
 
-from src.client.downloaderClient import DownloaderClient
+from client.downloaderClient import DownloaderClient
 
 from pyrogram import Filters
 

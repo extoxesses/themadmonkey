@@ -3,7 +3,7 @@
 
 
 # Projects imports
-import src.constants as CONSTS
+import constants as CONSTS
 import resources.reserved as RESERVED
 
 # Default imports

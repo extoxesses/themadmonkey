@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # Endpoints for non-command messages management
 
-import src.constants as CONSTS
-import src.utils.usersutils as UTILS
+import constants as CONSTS
+import utils.usersutils as UTILS
 import resources.reserved as RESERVED
 
 

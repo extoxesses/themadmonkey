@@ -2,7 +2,7 @@
 #!/usr/bin/env python
 # Class used from download client
 
-import src.constants as CONSTS
+import constants as CONSTS
 
 import logging
 logging.basicConfig(format=CONSTS.LOGGER_FORMAT, level=logging.INFO)

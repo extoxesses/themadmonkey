@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # This is an utility library for custom functions
 
-import src.constants as CONSTS
+import constants as CONSTS
 
 import logging
 import os

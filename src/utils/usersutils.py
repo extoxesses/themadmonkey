@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # This is an utility class including methods for users management
 
-import src.constants
+import constants
 
 import logging
 
 
-logging.basicConfig(format=src.constants.LOGGER_FORMAT, level=logging.INFO)
-LOGGER = logging.getLogger(src.constants.USERS_PACKAGE)
+logging.basicConfig(format=constants.LOGGER_FORMAT, level=logging.INFO)
+LOGGER = logging.getLogger(constants.USERS_PACKAGE)
 
 
 def checkUser(user, whitelist) :

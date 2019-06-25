@@ -11,11 +11,11 @@
 # A simple telegram bot for network analysis...
 
 # Project imports
-import src.constants
+import constants
 import resources.reserved
-import src.modules.helper
-import src.modules.network
-import src.modules.msgmanager as MSG_MANAGER
+import modules.helper
+import modules.network
+import modules.msgmanager as MSG_MANAGER
 
 # Default imports
 import logging
@@ -25,8 +25,8 @@ import os
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 
-logging.basicConfig(format=src.constants.LOGGER_FORMAT, level=logging.INFO)
-LOGGER = logging.getLogger(src.constants.MAIN)
+logging.basicConfig(format=constants.LOGGER_FORMAT, level=logging.INFO)
+LOGGER = logging.getLogger(constants.MAIN)
 
 
 
@@ -38,8 +38,8 @@ def getUpdater():
   dp = bot.dispatcher
 
   # on different commands - answer in Telegram
-  dp.add_handler(CommandHandler("hi", src.modules.helper.hi))
-  dp.add_handler(CommandHandler("whoyouare", src.modules.network.whoYouAre))
+  dp.add_handler(CommandHandler("hi", modules.helper.hi))
+  dp.add_handler(CommandHandler("whoyouare", modules.network.whoYouAre))
 
   # on noncommand i.e message - echo the message on Telegram
   dp.add_handler(MessageHandler(Filters.text, MSG_MANAGER.txtMsgHandler))
@@ -47,7 +47,7 @@ def getUpdater():
   dp.add_handler(MessageHandler(Filters.document, MSG_MANAGER.docAttachHandler))
 
   # log all errors
-  dp.add_error_handler(src.modules.helper.errorHandler)
+  dp.add_error_handler(modules.helper.errorHandler)
 
   LOGGER.info('configuration completed!')
   return bot

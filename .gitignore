@@ -4,7 +4,8 @@
 */*/*/*.pyc
 
 # Reserved files
-/resources/reserved.py
+/resources/
+/environments/
 
 # VSCode files
 /.vscode/
