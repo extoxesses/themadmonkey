@@ -1,27 +1,28 @@
 #!/usr/bin/env python
+#
 # Help endpoints
 
 
-# Projects imports
-import constants as CONSTS
-import resources.reserved as RESERVED
+from constants.bot_constants import BotConstants
 
-# Default imports
+from os import environ
+
 import logging
-import os
-
-logging.basicConfig(format=CONSTS.LOGGER_FORMAT, level=logging.INFO)
-LOGGER = logging.getLogger(CONSTS.HELP_PACKAGE)
+logging.basicConfig(format=BotConstants.LOGGER_FORMAT, level=logging.INFO)
+LOGGER = logging.getLogger(BotConstants.HELP_PACKAGE)
 
 
-def hi(bot, context):
-  user_id = context['message']['chat']['id']
-  try:
-    user_tag = RESERVED.VALID_USERS[user_id]
-    context.message.reply_text('Hi, ' + user_tag + '!')
-  except KeyError as e:
-    context.message.reply_text('Who are you?')
+
+class Helper :
+
+  def hi(bot, context):
+    user_id = context['message']['chat']['id']
+    try:
+      user_tag = RESERVED.VALID_USERS[user_id]
+      context.message.reply_text('Hi, ' + user_tag + '!')
+    except KeyError as e:
+      context.message.reply_text('Who are you?')
 
 
-def errorHandler(bot, context, error) :
-  LOGGER.error(error)
+  def errorHandler(bot, context, error) :
+    LOGGER.error(error)

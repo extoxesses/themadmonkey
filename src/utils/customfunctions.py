@@ -4,7 +4,7 @@
 import constants as CONSTS
 
 import logging
-import os
+from os import environ
 
 logging.basicConfig(format=CONSTS.LOGGER_FORMAT, level=logging.INFO)
 LOGGER = logging.getLogger(CONSTS.CUSTOM_PACKAGE)
@@ -16,4 +16,4 @@ def isTorrent(filename) :
 
 
 def startTorrentDownload(filepath) :
-  os.system('transmission-remote -a' + filepath)
+  system('transmission-remote -a' + filepath)
