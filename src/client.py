@@ -3,25 +3,33 @@
 #
 # Client used to bypass bot file size limit
 
-import resources.reserved as RESERVED
-from resources.reserved import pyroClient
-import constants as CONSTS
+
+from constants.config import Config
+from constants.bot_constants import BotConstants
+from utils.env_loader import EnvLoader
 
 from client.downloaderClient import DownloaderClient
 
 from pyrogram import Filters
 
 import logging
-logging.basicConfig(format=CONSTS.LOGGER_FORMAT, level=logging.INFO)
+logging.basicConfig(format=BotConstants.LOGGER_FORMAT, level=logging.INFO)
 LOGGER = logging.getLogger("Client")
 
+
+### --- Variables definitions
+
 downloader = DownloaderClient()
+
+pyroClient = EnvLoader.getClient()
+pyroClient.run()
+
 
 ### --- Script
 
 def allowedUser(message) :
   user = str(message.chat.username)
-  return (user == RESERVED.BOT_NAME)
+  return (user == Config.BOT_NAME)
 
 
 def bypassMsg() :
@@ -39,4 +47,6 @@ def handler(client, msg) :
     downloader.downloadFile(msg)
 
 
-pyroClient.run()
+# Script entry point
+
+

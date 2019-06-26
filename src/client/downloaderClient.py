@@ -2,10 +2,10 @@
 #!/usr/bin/env python
 # Class used from download client
 
-import constants as CONSTS
+from constants.bot_constants import BotConstants
 
 import logging
-logging.basicConfig(format=CONSTS.LOGGER_FORMAT, level=logging.INFO)
+logging.basicConfig(format=BotConstants.LOGGER_FORMAT, level=logging.INFO)
 LOGGER = logging.getLogger("DownloaderClient")
 
 
@@ -54,7 +54,7 @@ class DownloaderClient :
     if (req_msg == None) :
       return
 
-    if (CONSTS.FILE_ERROR_FORWARD_MSG not in req_msg) :
+    if (BotConstants.FILE_ERROR_FORWARD_MSG not in req_msg) :
       return
 
     file_name = req_msg.split(':')[1].lstrip()
