@@ -3,8 +3,6 @@
 # Environment configurations loader
 
 from pyrogram import Client
-from constants.config import Config
-
 
 
 class EnvLoader :
@@ -14,11 +12,11 @@ class EnvLoader :
   :returns: A client istance
   :rtype: pyrogram.Client object
   """
-  def getClient() :
+  def getClient(self, config) :
     return Client (
-      Config.OWNER_NAME,
-      api_id=Config.API_ID,
-      api_hash=Config.API_HASH
+      config.OWNER_NAME,
+      api_id=config.API_ID,
+      api_hash=config.API_HASH
     )
 
 
@@ -28,5 +26,5 @@ class EnvLoader :
   :returns: Allowed users map
   :rtype: dict
   """
-  def getValidUsers() :
-    return {Config.OWNER_ID : Config.OWNER_NAME}
+  def getValidUsers(self, config) :
+    return {config.OWNER_ID : config.OWNER_NAME}

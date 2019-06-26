@@ -20,6 +20,7 @@ from constants.config import Config
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 import os
+import sys
 
 import logging
 logging.basicConfig(format=BotConstants.LOGGER_FORMAT, level=logging.INFO)
@@ -27,9 +28,15 @@ LOGGER = logging.getLogger(BotConstants.MAIN)
 
 
 
-def getUpdater():
+def getEnvPath() :
+  path = str(sys.argv[1])
+  LOGGER.info('Environment .env file path: ' + path)
+  return path
+
+
+def getUpdater(config):
   LOGGER.info('Begin bot configuration...')
-  bot = Updater(Config.TOKEN)
+  bot = Updater(config.TOKEN)
   dp = bot.dispatcher
 
   dp.add_handler(CommandHandler("hi", Helper.hi))
@@ -47,9 +54,16 @@ def getUpdater():
 
 
 def main():
+  if (len(sys.argv) != 2) :
+    LOGGER.error('Invalid number of parameter: .env file is required!')
+    return
+
+  env_path = getEnvPath()
+  config = Config(env_path)
+
   # Start bot
   LOGGER.info('Bot started...')
-  updater = getUpdater()
+  updater = getUpdater(config)
 
   LOGGER.info('Listener started...')
   updater.start_polling()

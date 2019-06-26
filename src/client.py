@@ -4,37 +4,51 @@
 # Client used to bypass bot file size limit
 
 
-from constants.config import Config
 from constants.bot_constants import BotConstants
+from constants.config import Config
 from utils.env_loader import EnvLoader
-
 from client.downloaderClient import DownloaderClient
 
 from pyrogram import Filters
+
+import sys
 
 import logging
 logging.basicConfig(format=BotConstants.LOGGER_FORMAT, level=logging.INFO)
 LOGGER = logging.getLogger("Client")
 
 
-### --- Variables definitions
+# --- Script function
 
-downloader = DownloaderClient()
+config = None
 
-pyroClient = EnvLoader.getClient()
-pyroClient.run()
-
-
-### --- Script
-
+def getEnvPath() :
+  path = str(sys.argv[1])
+  LOGGER.info('Environment .env file path: ' + path)
+  return path
+  
 def allowedUser(message) :
   user = str(message.chat.username)
-  return (user == Config.BOT_NAME)
-
+  return (user == config.BOT_NAME)
 
 def bypassMsg() :
   LOGGER.warn('Incoming message ignored!')
 
+
+
+# --- Script entry point
+
+if (len(sys.argv) != 2) :
+  LOGGER.error('Invalid number of parameter: .env file is required!')
+  sys.exit()
+
+env_path = getEnvPath()
+config = Config(env_path)
+
+downloader = DownloaderClient()
+
+pyroClient = EnvLoader.getClient(config)
+pyroClient.run()
 
 @pyroClient.on_message(~Filters.private)
 def handler(client, msg) :
@@ -45,8 +59,3 @@ def handler(client, msg) :
 
   if (not downloader.addMessage(msg)) :
     downloader.downloadFile(msg)
-
-
-# Script entry point
-
-
