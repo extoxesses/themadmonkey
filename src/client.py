@@ -48,7 +48,7 @@ config = Config(env_path)
 downloader = DownloaderClient()
 
 pyroClient = EnvLoader.getClient(config)
-pyroClient.run()
+
 
 @pyroClient.on_message(~Filters.private)
 def handler(client, msg) :
@@ -59,3 +59,6 @@ def handler(client, msg) :
 
   if (not downloader.addMessage(msg)) :
     downloader.downloadFile(msg)
+
+
+pyroClient.run()

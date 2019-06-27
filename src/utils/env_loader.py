@@ -12,7 +12,7 @@ class EnvLoader :
   :returns: A client istance
   :rtype: pyrogram.Client object
   """
-  def getClient(self, config) :
+  def getClient(config) :
     return Client (
       config.OWNER_NAME,
       api_id=config.API_ID,
@@ -20,11 +20,10 @@ class EnvLoader :
     )
 
 
-
   """This method returs the map of the default allowed users
 
   :returns: Allowed users map
   :rtype: dict
   """
-  def getValidUsers(self, config) :
+  def getValidUsers(config) :
     return {config.OWNER_ID : config.OWNER_NAME}
