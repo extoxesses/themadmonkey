@@ -11,4 +11,4 @@ echo "-----------------------------"
 echo ">>> Running building image..."
 echo ""
 
-sudo docker run -v ~/Downloads/themadmonkey :/the-mad-monkey-bot/downloads -it exto/themadmonkey
+sudo docker run -v ~/Downloads/themadmonkey:/the-mad-monkey-bot/downloads -it exto/themadmonkey

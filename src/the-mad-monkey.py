@@ -11,6 +11,8 @@
 # A simple telegram bot for network analysis...
 
 
+import modules.helper
+
 from modules.helper import Helper
 from modules.msgmanager import MessageManagerService
 from modules.network import NetworkService
@@ -39,6 +41,7 @@ def getUpdater(config):
   bot = Updater(config.TOKEN)
   dp = bot.dispatcher
 
+  modules.helper.config = config
   dp.add_handler(CommandHandler("hi", Helper.hi))
   dp.add_handler(CommandHandler("whoyouare", NetworkService.whoYouAre))
 

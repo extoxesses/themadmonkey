@@ -12,15 +12,16 @@ logging.basicConfig(format=BotConstants.LOGGER_FORMAT, level=logging.INFO)
 LOGGER = logging.getLogger(BotConstants.HELP_PACKAGE)
 
 
+config = None
 
 class Helper :
 
   def hi(bot, context):
     user_id = context['message']['chat']['id']
-    try:
-      user_tag = RESERVED.VALID_USERS[user_id]
-      context.message.reply_text('Hi, ' + user_tag + '!')
-    except KeyError as e:
+    if ((config != None) and (str(user_id) == str(config.OWNER_ID))):
+      context.message.reply_text('Hi, ' + config.OWNER_NAME + '!')
+
+    else:
       context.message.reply_text('Who are you?')
 
 
